@@ -9,7 +9,6 @@ class Game {
   }
 
   setup() {
-    // Place ships for both players
     this.placeShipsRandomly(this.player.gameboard);
     this.placeShipsRandomly(this.computer.gameboard);
   }
@@ -28,21 +27,25 @@ class Game {
   }
 
   playTurn(x, y) {
+    let result;
     if (this.currentPlayer === this.player) {
-      const hit = this.player.attack(this.computer.gameboard, x, y);
+      result = this.player.attack(this.computer.gameboard, x, y);
       if (this.computer.gameboard.allShipsSunk()) {
-        return 'player';
+        return 'player wins';
       }
       this.currentPlayer = this.computer;
-      return hit ? 'hit' : 'miss';
     } else {
-      const hit = this.computer.randomAttack(this.player.gameboard);
+      result = this.computer.randomAttack(this.player.gameboard);
       if (this.player.gameboard.allShipsSunk()) {
-        return 'computer';
+        return 'computer wins';
       }
       this.currentPlayer = this.player;
-      return hit ? 'hit' : 'miss';
     }
+    return result;
+  }
+
+  isGameOver() {
+    return this.player.gameboard.allShipsSunk() || this.computer.gameboard.allShipsSunk();
   }
 }
 

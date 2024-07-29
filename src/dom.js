@@ -40,22 +40,34 @@ const DOM = (() => {
     const playerResult = game.playTurn(x, y);
     updateBoard();
 
-    if (playerResult === 'player') {
+    if (playerResult === 'player wins') {
       endGame('player');
     } else {
-      messageDisplay.textContent = playerResult === 'hit' ? 'You got a hit!' : 'You missed!';
+      messageDisplay.textContent = getResultMessage(playerResult);
       
-      // Computer's turn
       setTimeout(() => {
         const computerResult = game.playTurn();
         updateBoard();
 
-        if (computerResult === 'computer') {
+        if (computerResult === 'computer wins') {
           endGame('computer');
         } else {
-          messageDisplay.textContent += computerResult === 'hit' ? ' Computer got a hit!' : ' Computer missed!';
+          messageDisplay.textContent += ' ' + getResultMessage(computerResult, true);
         }
       }, 500);
+    }
+  }
+  function getResultMessage(result, isComputer = false) {
+    const player = isComputer ? 'Computer' : 'You';
+    switch (result) {
+      case 'hit':
+        return `${player} got a hit!`;
+      case 'miss':
+        return `${player} missed!`;
+      case 'sunk':
+        return `${player} sunk a ship!`;
+      default:
+        return '';
     }
   }
 

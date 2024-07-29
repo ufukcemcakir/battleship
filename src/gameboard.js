@@ -1,9 +1,9 @@
 class Gameboard {
-    constructor() {
-      this.ships = [];
-      this.missedAttacks = [];
-      this.board = Array(10).fill(null).map(() => Array(10).fill(null));
-    }
+  constructor() {
+    this.ships = [];
+    this.missedAttacks = [];
+    this.board = Array(10).fill(null).map(() => Array(10).fill(null));
+  }
   
     placeShip(ship, x, y, isVertical) {
       if (this.isValidPlacement(ship, x, y, isVertical)) {
@@ -38,10 +38,10 @@ class Gameboard {
     receiveAttack(x, y) {
       if (this.board[x][y] === null) {
         this.missedAttacks.push([x, y]);
-        return false;
+        return 'miss';
       } else {
         this.board[x][y].hit();
-        return true;
+        return this.board[x][y].isSunk() ? 'sunk' : 'hit';
       }
     }
   

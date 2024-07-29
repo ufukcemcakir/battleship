@@ -1,6 +1,5 @@
 import Gameboard from './gameboard';
 
-// player.js
 class Player {
   constructor(isComputer = false) {
     this.gameboard = new Gameboard();
